@@ -1,0 +1,464 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN" "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd">
+<book id="tutorial" lang="de">
+   <title>Einführung in das TechDivision_Controller MVC Framework</title>
+   <chapter id="introduction">
+      <title>Einleitung</title>
+      <para>Die aktuelle Version das MVC basierten Frameworks <application class="software"
+            >TechDivision_Controller</application> wurde speziellf für PHP5 entworfen und nutzt intensiv die
+         damit eingeführten Sprachelemente, wie Interfaces oder Iteratoren.</para>
+      <para>Das Framework unterstützt den Entwickler, neben der eigentlichen Aufgabe, nämlich der
+         Übernahme der Anwendungssteuerung, auch bei der Umsetzung der Mehrsprachigkeit der zu
+         entwickelnden Anwendung, der Validierung der vom Anwender eingegebenen Daten und der
+         Einhaltung der Systemarchitektur.</para>
+      <para>Das Framework stellt, entgegen vieler anderer Frameworks im PHP Umfeld, dem Entwickler
+         weder Mittel oder Funktionen für die Anbindung einer Datenbank noch für die Umsetzung der
+         Oberfläche zur Verfügung. TechDivision_Controller übernimmt ausschließlich die Aufgabe der
+         Anwendungssteuerung.</para>
+      <para>Dies wird jedoch bewußt so gehalten, da sich gerader aus dieser Tatsache heraus die
+         Möglichkeit ergibt, eine der zahlreichen Lösungen, z. B. Smarty für die
+         Oberflächenentwicklung, einzusetzen und dem Entwickler somit die größtmögliche Flexibilität
+         beim Einsatz der von ihm bevorzugten Softwarekomponenten zu geben.</para>
+   </chapter>
+   <chapter id="system_dependencies">
+      <title>Systemvoraussetzungen</title>
+      <simplelist>
+         <member>PHP ab Version 5.0.x</member>
+         <member><application class="software">lang</application> Paket</member>
+         <member><application class="software">logger</application> Paket</member>
+         <member><application class="software">collections</application> Paket</member>
+         <member><application class="software">properties</application> Paket</member>
+         <member><application class="software">httputils</application> Paket</member>
+      </simplelist>
+      <para/>
+   </chapter>
+   <chapter id="installation">
+      <title>Installation</title>
+      <para>Die Installation erfolgt wie alle Pakte aus dem TechDivision_Controller Framework über den PEAR
+         Installer.</para>
+      <para>Hierzu muss, falls noch nicht erfolgt, zuerst der Channel pear.TechDivision_Controller.org in PEAR
+         Installer aufgenommen werden. Dies kann über die Kommandozeile mit dem Befehl <command>pear
+            channel-discover pear.TechDivision_Controller.org</command> durchgeführt werden. </para>
+      <para>Die eigentliche Installation kann dann ebenfalls über die Kommandozeile durch Eingabe
+         von <command>pear install TechDivision_Controller/TechDivision_Controller</command> vorgenommen werden.</para>
+   </chapter>
+   <chapter id="usage">
+      <title>Verwendung</title>
+      <para>Anhand des folgenden Beispiels soll die Verwendung des Frameworks dargestellt werden.</para>
+      <sect1 id="configuration">
+         <title>Konfiguration</title>
+         <subtitle>Aufbau der Konfigurationsdatei</subtitle>
+         <para>Das Framework wird über eine XML Datei konfiguriert. Diese wird zur Laufzeit
+            eingelesen und die darin enthaltenen Informationen werden in Objekte umgewandelt, die
+            dann durch das Framework zur Steuerung der Anwendung verwendet werden.</para>
+         <para>Die Konfigurationsdatei besteht aus bis zu sechs Basisknoten, die wichtige
+            Informationen für die Anwendungssteuerung enthalten. Die wichtigsten Basisknoten werden
+            im nachfolgenden Beispiel erläutert.</para>
+         <example>
+            <title>Basisknoten der Konfigurationsdatei</title>
+            <programlisting role="xml"><![CDATA[
+               <?xml version="1.0" encoding="iso-8859-1"?>
+               <struts-config>
+                  <message-resources/>
+                  <form-beans/>
+                  <global-forwards/>
+                  <action-mappings/>
+               </struts-config>
+               ]]>                
+            </programlisting>
+         </example>
+         <sect2>
+            <title>Ressourcen</title>
+            <subtitle>Basisknoten <![CDATA[<message-resources>]]></subtitle>
+            <para>Über diesen Basisknoten können die Ressourcen der Anwendung konfiguriert werden.
+               Hierbei wird ein über den Parameter name der Name der zu verwendenden Ressourcendatei
+               festgelegt. Für jede im System verwendete Sprache muss eine entsprechende
+               Ressourcendatei zur Verfügung gestellt werden. Die zu verwendende Sprache wird als
+               Parameter bei der Initializierung des ActionControllers übergeben.</para>
+            <para>Ressourcen werden hauptsächlich zur Internationalisierung (I18N) einer Anwendung
+               verwendet und erlauben eine einfache Handhabung der einzelnen Texte durch den
+               Übersetzer. Weiterhin wird durch die Auslagerung der in der Anwendung ausgegebenen
+               Meldungen und Texte in separate Dateien die Trennung von Anwendungslogik und
+               Oberfläche unterstützt.</para>
+            <example>
+               <title>Ressourcendefinition</title>
+               <programlisting role="xml"><![CDATA[
+               <?xml version="1.0" encoding="iso-8859-1"?>
+               <struts-config>
+                  <message-resources name="ressources" path="WEB-INF"/>
+                  <form-beans/>
+                  <global-forwards/>
+                  <action-mappings>
+                     <action path path="/helloWorld" 
+                             name="" 
+                             type="HelloWorldAction" 
+                             include="actions/helloworldaction.php" 
+                             scope="request" 
+                             input="" 
+                             parameter="" 
+                             validate="false" 
+                             unknown="false">
+                        <forward name="Success" path="hello_world.tpl.html" redirect="false"/>
+                     </action>
+                  </action-mappings>
+               </struts-config>
+               ]]>                
+               </programlisting>
+            </example>
+            <para>Wird wie im obigen Beispiel als Wert für den Parameter name ressources angegeben,
+               und als Wert für den Parameter path der Wert WEB-INF, so muss unterhalb des
+               Basisverzeichnisses der Anwendung, wenn z. B. als Locale de_DE übergeben wird, eine
+               Ressourcendatei mit dem Namen ressources.de_DE.properties angelegt werden.</para>
+            <example>
+               <title>Initialisierung des ActionControllers</title>
+               <programlisting role="php">
+                  
+                  // eine Instanz der HTTPRequest initialisieren
+                  <varname>$request</varname> = new <classname>HTTPRequest</classname>();
+                  
+                  // eine Instanz des ActionControllers initialisieren
+                  <varname>$controller</varname> = new <classname>ActionController</classname>("WEB-INF/struts-config.xml", "de_DE");
+                  <varname>$controller</varname>-><methodname>initialize</methodname>();
+                  <varname>$template</varname> = <varname>$controller</varname>-><methodname>process</methodname>(<varname>$request</varname>)
+                  
+                  // die Smarty Template Engine initialisieren und das vom ActionController zurückgegebene Template parsen und ausgeben 
+                  <varname>$smarty</varname> = new <classname>Smarty</classname>();
+                  <varname>$smarty</varname>-><methodname>display</methodname>(<varname>$template</varname>);
+                  
+               </programlisting>
+            </example>
+            <para>Diese Ressourcendatei hat den Aufbau key = value wobei die Werte in Hochkommas zu
+               schreiben sind.</para>
+            <example>
+               <title>Aufbau der Ressourendatei ressources.de_DE.properties</title>
+               <programlisting role="php">
+                  
+                  hello.world = "Hallo Welt!"
+                  email.none = "Bitte geben Sie eine E-Mail Adresse ein!"
+                  ...
+                                    
+               </programlisting>
+            </example>
+            <para>Die automatisch durch das Framework zur Verfügung gestellten Ressourcen können
+               dann über die Instanz des ActionControllers verwendet werden.</para>
+            <example>
+               <title>Verwendung der Ressourcen in einer Action</title>
+               <programlisting role="php">
+                  
+                  /**
+                   * Diese Testklasse soll veranschaulichen, wie innerhalb einer
+                   * Anwendungssteuerungsklasse der Zugriff auf die Ressourcen
+                   * möglich ist.
+                   *
+                   * @author Tim Wagner <![CDATA[<tw@TechDivision_Controller.org>]]>
+                   */
+                  class HelloWorldAction implements Action {
+                  
+                     /**
+                      * @var string Klassenkonstante für den Zugriff auf den gewünschten Ressourceneintrag
+                      */
+                     const <constant>HELLO_WORLD</constant> = "hello.world";
+                     
+                     /**
+                      * @var string Klassenkonstante für den zurückzugegebenden ActionForward Schlüssel
+                      */
+                     const <constant>SUCCESS</constant> = "Success";
+                     
+                     /**
+                      * Dies ist die einzige Methode der Anwendungssteuerungsklasse. Sie wird automatisch 
+                      * durch das Framework aufgerufen und implementiert die eigentliche Funktionalität,
+                      * hier das holen eines Wertes aus der Ressourcendatei und das ablegen des Wertes in
+                      * den HTTPRequest.
+                      *
+                      * Anschließend gibt die Funktion den in den ActionForward der in der
+                      * Konfigurationsdatei unter dem Namen "Success" gespeichert ist zurück. Das Framework
+                      * stopp daraufhin die Verarbeitung und gibt den für diesen ActionForward hinterlegten
+                      * Wert des path Parameters, hier "hello_world.tpl.html" zurück. 
+                      * 
+                      * Dies stellt den Namen eines Smarty Templates dar, das wiederum durch die Smarty
+                      * Template Engine geparst und ausgegeben wird.
+                      * 
+                      * @param <classname>ActionMapping</classname> <varname>$actionMapping</varname>
+                      * @param <classname>ActionForm</classname> <varname>$actionForm</varname>
+                      * @param <classname>HTTPRequest</classname> <varname>$request</varname>
+                      * @return <classname>ActionForward</classname>
+                      */
+                     public function <function>perform</function>(<classname>ActionMapping</classname> <varname>$actionMapping</varname>, <varname>$actionForm</varname>, <classname>HTTPRequest</classname> <varname>$request</varname>) {
+                        
+                        // eine Referenz auf die ActionController Instanz holen
+                        <varname>$controller</varname> = <varname>$actionMapping</varname>-><methodname>getMappings</methodname>()-><methodname>getController</methodname>();
+                        
+                        // die "Hallo Welt" Zeichenkette für die Sprache "de_DE" aus der Ressourcendatei holen 			
+                        <varname>$localizedMessage</varname> = <varname>$controller</varname>-><methodname>getResources</methodname>()-><methodname>find</methodname>(<classname>self</classname>::<constant>HELLO_WORLD</constant>);
+                        
+                        // die Zeichenkette zur späteren Verwendung in den HTTPRequest stecken
+                        <varname>$request</varname>-><methodname>setAttribute</methodname>(<classname>self</classname>::<constant>HELLO_WORLD</constant>, <varname>$localizedMessage</varname>);
+                        
+                        // dem Framework mitteilen, was als nächstes zu tun ist
+                        return <varname>$actionMapping</varname>-><methodname>findForward</methodname>(<classname>self</classname>::<constant>SUCCESS</constant>); 
+                     }
+                  }
+                  
+               </programlisting>
+            </example>
+         </sect2>
+         <sect2>
+            <title>Action Dateien</title>
+            <subtitle>Basisknoten <![CDATA[<action-mappings>]]></subtitle>
+            <para>Die eigentliche Funktionalität der Anwendung wird in den Actions implementiert.
+               Diese bieten hierzu die Methode perform(), die automatisch durch das Framework zur
+               Laufzeit aufgerufen wird.</para>
+            <para>Das Framework entscheided zur Laufzeit je nach übergebener path Variable und dem
+               über die Konfigurationsdatei angegebenen Mapping, welche Action instanziert und die
+               perform() Methode aufgerufen wird.</para>
+            <para>Die nachfolgende Beispielkonfiguration würde beim Aufruf des ActionControllers mit
+               dem Wert /helloWorld für den Parameter path die Action HelloWorldAction instanzieren
+               und deren Perform Methode aufrufen. Anschließend würde das Framework den Wert
+               hello_world.tpl.html zurückgeben, der dann z. B. durch eine Template Engine wie
+               Smarty als Name eines Templates verwendet wird.</para>
+            <example>
+               <title>Definition eines Action Mappings</title>
+               <programlisting role="xml"><![CDATA[
+               <?xml version="1.0" encoding="iso-8859-1"?>
+               <struts-config>
+                  <message-resources name="ressources" path="WEB-INF"/>
+                  <form-beans/>
+                  <global-forwards/>
+                  <action-mappings>
+                     <action path path="/helloWorld" 
+                             name="helloWorldForm" 
+                             type="HelloWorldAction" 
+                             include="actions/helloworldaction.php" 
+                             scope="request" 
+                             input=""
+                             parameter="" 
+                             validate="false" 
+                             unknown="false">
+                        <forward name="Success" path="hello_world.tpl.html" redirect="false"/>
+                     </action>
+                  </action-mappings>
+               </struts-config>
+               ]]>                
+               </programlisting>
+            </example>
+            <example>
+               <title>Verwendung der Ressourcen in einer Action</title>
+               <programlisting role="php">
+                  
+                  /**
+                   * Diese Testklasse soll veranschaulichen, wie innerhalb einer
+                   * Anwendungssteuerungsklasse der Zugriff auf die Ressourcen
+                   * möglich ist.
+                   *
+                   * @author Tim Wagner <![CDATA[<tw@TechDivision_Controller.org>]]>
+                   */
+                  class HelloWorldAction implements Action {
+                  
+                     /**
+                      * @var string Klassenkonstante für den Zugriff die Person über den HTTPRequest
+                      */
+                     const <constant>PERSON_VIEW_DATA</constant> = "personViewData";
+                     
+                     /**
+                      * @var string Klassenkonstante für den zurückzugegebenden ActionForward Schlüssel
+                      */
+                     const <constant>SUCCESS</constant> = "Success";
+                     
+                     /**
+                      * Dies ist die einzige Methode der Anwendungssteuerungsklasse. Sie wird automatisch 
+                      * durch das Framework aufgerufen und implementiert die eigentliche Funktionalität,
+                      * hier das holen einer Person aus der Datenbank und das Ablegen des Objektes im
+                      * den HTTPRequest.
+                      *
+                      * Anschließend gibt die Funktion den in den ActionForward der in der
+                      * Konfigurationsdatei unter dem Namen "Success" gespeichert ist zurück. Das Framework
+                      * stopp daraufhin die Verarbeitung und gibt den für diesen ActionForward hinterlegten
+                      * Wert des path Parameters, hier "hello_world.tpl.html" zurück. 
+                      * 
+                      * Dies stellt den Namen eines Smarty Templates dar, das wiederum durch die Smarty
+                      * Template Engine geparst und ausgegeben wird.
+                      * 
+                      * @param <classname>ActionMapping</classname> <varname>$actionMapping</varname>
+                      * @param <classname>ActionForm</classname> <varname>$actionForm</varname>
+                      * @param <classname>HTTPRequest</classname> <varname>$request</varname>
+                      * @return <classname>ActionForward</classname>
+                      */
+                     public function <function>perform</function>(<classname>ActionMapping</classname> <varname>$actionMapping</varname>, <varname>$actionForm</varname>, <classname>HTTPRequest</classname> <varname>$request</varname>) {
+                  
+                        // irgendeine, z. B. die PEAR DB Datenbank Abstraktionsschicht instanzieren
+                        <varname>$db</varname> = <classname>DB</classname>::<methodname>getInstance</methodname>("WEB-INF/db.xml");
+                  
+                        // einen Wert aus der Datenbank holen
+                        <varname>$person</varname> = <varname>$db</varname>-><methodname>getPerson</methodname>(1);
+                        
+                        // die Person wür die Ausgabe über die Smarty Template Engine in den HTTPRequest stecken
+                        <varname>$request</varname>-><methodname>setAttribute</methodname>(<classname>self</classname>::<constant>PERSON_VIEW_DATA</constant>, <varname>$person</varname>);
+                                                
+                        // dem Framework mitteilen, was als nächstes zu tun ist
+                        return <varname>$actionMapping</varname>-><methodname>findForward</methodname>(<classname>self</classname>::<constant>SUCCESS</constant>); 
+                     }
+                  }
+                  
+               </programlisting>
+            </example>
+            <example>
+               <title>Smarty Template</title>
+               <programlisting role="php">
+                  <![CDATA[
+                  {struts_html_tag}
+                     <head>
+                        <title></title>
+                     </head>
+                     <body>
+                        {bean_define_tag id="person" name="personViewData" scope="request"}
+                        Name: {struts_text_tag name="person" property="name"}
+                     </body>
+                  {/struts_html_tag}
+                  ]]>
+               </programlisting>
+            </example>
+         </sect2>
+         <sect2>
+            <title>ActionForm Dateien (FormBeans)</title>
+            <subtitle>Basisknoten <![CDATA[<form-beans>]]></subtitle>
+            <para>Das Framework bietet dem Entwickler die Möglichkeit die vom Benutzer eingegebenen
+               Daten zentral in einer einzigen Methode, die automatisch zur Laufzeit aufgerufen
+               wird, zu überprüfen. Wenn Fehler festgestellt werden, so springt das Framework
+               automatisch auf die in der Konfigurationsdatei festgelegte Ausgangsseite zurück.</para>
+            <para>Hierzu ist es notwendig ein Klasse anzulegen, und diese über die
+               Konfigurationsdatei des Frameworks zu registrieren. Anschließend kann ebenfalls über
+               die Konfigurationsdatei eingestellt werden, ob diese Klasse zur Laufzeit automatisch
+               instanziert und die entsprechende Methode aufgerufen werden soll, oder ob der
+               Enwickler diese manuell innerhalb seiner Funktionen aufrufen möchte.</para>
+            <para>Nachfolgendes Beispiel erweitert die zuvor gezeigt Konfigurationsdatei um ein
+               ActionForm und verwendet dies zur Validierung der im Template hello_world.tpl.html
+               eingegebenen Daten. Treten hier Fehler auf, so wird automatisch wieder das Template
+               hello_world.tpl.html aufgerufen.</para>
+            <example>
+               <title>Definition einer ActionForm Datei</title>
+               <programlisting role="xml"><![CDATA[
+               <?xml version="1.0" encoding="iso-8859-1"?>
+               <struts-config>
+                  <message-resources name="ressources" path="WEB-INF"/>
+                  <form-beans>
+                     <form-bean name="helloWorldForm" 
+                                type="HelloWorldForm" 
+                                include="forms/helloworldform.php"/>
+                  </form-beans>
+                  <global-forwards/>
+                  <action-mappings>
+                     <action path path="/helloWorld" 
+                             name="helloWorldForm" 
+                             type="HelloWorldAction" 
+                             include="actions/helloworldaction.php" 
+                             scope="request" 
+                             input="hello_world.tpl.html"
+                             parameter="" 
+                             validate="true" 
+                             unknown="false">
+                        <forward name="Success" path="hello_world.tpl.html" redirect="false"/>
+                     </action>
+                  </action-mappings>
+               </struts-config>
+               ]]>                
+               </programlisting>
+            </example>
+            <para>Über das zugehörige ActionForm können die im Template vom Anwender eingegebenen
+               Daten überprüft werden. Das hierzu gehörende ActionForm könnte folgendermaßen
+               aussehen.</para>
+            <example>
+               <title>Implementierung der zugehörigen ActionForm Klasse</title>
+               <programlisting>
+                  
+                  /**
+                   * Diese Klasse zeigt die beispielhafte Implementierung einer ActionForm Klasse
+                   * die ein Formular mit nur einem Eingabefeld, nämlich einer E-Mail Adresse,
+                   * überprüfen soll.
+                   *
+                   * Wird festgestellt, dass keine E-Mail Adresse durch den Anwender eingegeben
+                   * wurde, so wird ein ActionError Objekt, mit einer lokalisierte Fehlermeldung
+                   * aus der Ressourcendatei, initialisiert, im ActionErrors Objekt registriert
+                   * und dieses wiederum zurückgegeben.
+                   *
+                   * Diese Fehlermeldung kann anschließend im Template ausgegeben werden um dem
+                   * Anwender mitzuteilen, welche Felder auszufüllen sind.
+                   *
+                   * @author Tim Wagner <![CDATA[<tw@techdivision.com>]]>
+                   */
+                  class <classname>HelloWorldForm</classname> implements <classname>ActionForm</classname> {
+                  
+                     /**
+                      * @var string Klassenkonstante unter der die Fehlermeldung in den Ressourcen zu finden ist
+                      */
+                     const <constant>EMAIL_NONE</constant> = "email.none";
+                     
+                     /**
+                      * @var string Klassenkonstante unter der die Fehlermeldung in ActionErrors Objekt wiederzufinden ist
+                      */
+                     const <constant>EMAIL</constant> = "email";
+                     
+                     /**
+                      * @var string Klassenvariable unter der die Zeichenkette im HTTPRequest abgelegt wird
+                      */
+                     private <varname>$email</varname> = null;
+ 
+                     /**
+                      * Diese Methode wird zur Laufzeit aufgerufen und setzt die Klassenvariablen
+                      * auf die gewünschten Werte zurück.
+                      *
+                      * Die Methode kann auch genutzt werden um Klassenvariablen und damit die
+                      * entsprechenden Formularfelder mit den gewünschten Werten vorzubelegen, 
+                      * z. B. einen Standardwert.
+                      * 
+                      * @param <classname>ActionMapping</classname> <varname>$actionMapping</varname>
+                      * @return void
+                      */                    
+                     public function <function>reset</function>(<classname>ActionMapping</classname>) {
+                        <varname>$this</varname>->email = "";
+                     }
+                     
+                     /**
+                      * Diese Method wird automatisch zur Laufzeit aufgerufen, wenn in der Konfigurationsdatei
+                      * der validate Parameter der Action auf true gesetzt wurde, wie es in obigem Beispiel
+                      * der Fall ist.
+                      *
+                      * Enthält das zurückgegebenen ActionErrors Objekt mindestens ein ActionError Objekt mit
+                      * der entsprechenden Fehlermeldung, so ruft das Framework automatisch das über den input
+                      * Parameter festgelegte Template auf. Dort können dann die Fehlermeldungen ausgegeben
+                      * werden.
+                      * 
+                      * @param <classname>ActionMapping</classname> <varname>$actionMapping</varname>
+                      * @param <classname>HTTPRequest</classname> <varname>$request</varname>
+                      * @return <classname>ActionErrors</classname>
+                      */
+                     public function <function>validate</function>(<classname>ActionMapping</classname> <varname>$actionMapping</varname>, <classname>HTTPRequest</classname> <varname>$request</varname>) {
+                        
+                        // initialisieren einer neuen ActionErrors Instanz
+                        <varname>$actionErrors</varname> = new <classname>ActionErrors</classname>();
+                        
+                        // eine Referenz auf die ActionController Instanz holen
+                        <varname>$controller</varname> = <varname>$actionMapping</varname>-><methodname>getMappings</methodname>()-><methodname>getController</methodname>();
+                         
+                        // Überprüfen ob eine E-Mail Adresse eingegeben wurde, wenn nicht eine Fehlermeldung ausgeben                
+                        if(<function>empty</function>(<varname>$this</varname>->email)) {
+                        
+                           // die lokalisierte Fehlermeldung für die Sprache aktuelle Sprache aus der Ressourcendatei holen 			
+                           <varname>$localizedMessage</varname> = <varname>$controller</varname>-><methodname>getResources</methodname>()-><methodname>find</methodname>(<classname>self</classname>::<constant>EMAIL_NONE</constant>);
+                           
+                           // ein ActionError Objekt für die Speicherung der Fehlermeldung erzeugen
+                           <varname>$actionError</varname> = new ActionError(<classname>self</classname>::<constant>EMAIL</constant>, <varname>$localizedMessage</varname>);
+                           
+                           // das ActionError Objekt im ActionErrors Objekt registrieren
+                           <varname>$actionErrors</varname>-><methodname>addActionError</methodname>(<varname>$actionError</varname>);
+                        }
+                        
+                        // das ActionErrors Objekt mit den Fehlermeldungen zurückgeben
+                        return <varname>$actionErrors</varname>;
+                     }
+                  }
+               </programlisting>
+            </example>
+         </sect2>
+      </sect1>
+   </chapter>
+</book>

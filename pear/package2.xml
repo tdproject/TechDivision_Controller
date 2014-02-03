@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?><package xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" packagerversion="1.7.1" version="2.0" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0     http://pear.php.net/dtd/tasks-1.0.xsd     http://pear.php.net/dtd/package-2.0     http://pear.php.net/dtd/package-2.0.xsd">
+	<name>${ant.project.name}</name>
+	<channel>${pear.channel}</channel>
+	<summary>MVC based framework for PHP 5.1 and greater</summary>
+	<description>
+		MVC based framework for developing php web applications like jakarta struts.
+	</description>
+	<lead>
+		<name>Tim Wagner</name>
+		<user>wagnert</user>
+		<email>tw@techdivision.com</email>
+		<active>yes</active>
+	</lead>
+	<date>${actual.date}</date>
+	<time>${actual.time}</time>
+	<version>
+		<release>${release.version}</release>
+		<api>${api.version}</api>
+	</version>
+	<stability>
+		<release>${release.stability}</release>
+		<api>${api.stability}</api>
+	</stability>
+	<license uri="http://www.gnu.org/licenses/gpl-2.0.html">GPL, version 2.0</license>
+	<notes>- Bugfixing invalid handling for 'unknown' ActionMapping</notes>
+    <contents>
+        <dir name="/"/>
+    </contents>
+	<dependencies>
+		<required>
+			<php>
+				<min>5.2.0</min>
+				<max>6.0</max>
+			</php>
+			<pearinstaller>
+				<min>1.6.2</min>
+			</pearinstaller>
+			<package>
+				<name>TechDivision_Resources</name>
+				<channel>pear.appserver.io/library</channel>
+				<min>0.1.0</min>
+			</package>
+			<package>
+				<name>TechDivision_Logger</name>
+				<channel>pear.appserver.io/library</channel>
+				<min>0.1.0</min>
+			</package>
+			<package>
+				<name>TechDivision_HttpUtils</name>
+				<channel>pear.appserver.io/library</channel>
+				<min>0.1.0</min>
+			</package>
+		</required>
+	</dependencies>
+	<phprelease/>
+	<changelog>
+		<release>
+                    <version>
+                        <release>0.3.5</release>
+                        <api>0.3.0</api>
+                    </version>
+                    <stability>
+                        <release>beta</release>
+                        <api>beta</api>
+                    </stability>
+                    <date>2011-09-25</date>
+                    <license uri="http://www.gnu.org/licenses/gpl-2.0.html">GPL, version 2.0</license>
+                    <notes>
+                        - Bugfixing invalid handling for 'unknown' ActionMapping
+                    </notes>
+                </release>
+<release>
+                    <version>
+                        <release>0.3.4</release>
+                        <api>0.3.0</api>
+                    </version>
+                    <stability>
+                        <release>beta</release>
+                        <api>beta</api>
+                    </stability>
+                    <date>2011-09-25</date>
+                    <license uri="http://www.gnu.org/licenses/gpl-2.0.html">GPL, version 2.0</license>
+                    <notes>
+                        - Decoupling configuration and controller
+                    </notes>
+                </release>
+<release>
+                    <version>
+                        <release>0.3.2</release>
+                        <api>0.3.0</api>
+                    </version>
+                    <stability>
+                        <release>beta</release>
+                        <api>beta</api>
+                    </stability>
+                    <date>2011-05-02</date>
+                    <license uri="http://www.gnu.org/licenses/gpl-2.0.html">GPL, version 2.0</license>
+                    <notes>
+                        - Adding isInitialized() and setInitialized($initialized = true) method to avoid overwriting the configuration
+                    </notes>
+                </release>
+<release>
+                    <version>
+                        <release>0.3.1</release>
+                        <api>0.3.0</api>
+                    </version>
+                    <stability>
+                        <release>beta</release>
+                        <api>beta</api>
+                    </stability>
+                    <date>2011-05-02</date>
+                    <license uri="http://www.gnu.org/licenses/gpl-2.0.html">GPL, version 2.0</license>
+                    <notes>
+                        - Switching to new build and deployment process
+                    </notes>
+                </release>
+<release>
+<version>
+				<release>0.3.0</release>
+				<api>0.3.0</api>
+			</version>
+			<stability>
+				<release>beta</release>
+				<api>beta</api>
+			</stability>
+			<date>2010-10-11</date>
+			<license uri="http://www.gnu.org/licenses/gpl-2.0.html">GPL, version 2.0</license>
+			<notes>
+				- Refactor AbstractActionForm, make methods getContext(), _getRequest() and _getActionMapping() public
+			</notes>
+		</release>
+		<release>
+            <version>
+                <release>0.2.2</release>
+                <api>0.2.1</api>
+            </version>
+            <stability>
+                <release>beta</release>
+                <api>beta</api>
+            </stability>
+            <date>2010-07-22</date>
+            <license uri="http://www.gnu.org/licenses/gpl-2.0.html">GPL, version 2.0</license>
+            <notes>
+                - Refactoring Controller workflow
+            </notes>
+        </release>
+		<release>
+            <version>
+                <release>0.2.1</release>
+                <api>0.2.0</api>
+            </version>
+            <stability>
+                <release>beta</release>
+                <api>beta</api>
+            </stability>
+            <date>2010-07-22</date>
+            <license uri="http://www.gnu.org/licenses/gpl-2.0.html">GPL, version 2.0</license>
+            <notes>
+                - Added Abstract.php to package2.xml
+            </notes>
+        </release>
+		<release>
+            <version>
+                <release>0.2.0</release>
+                <api>0.2.0</api>
+            </version>
+            <stability>
+                <release>beta</release>
+                <api>beta</api>
+            </stability>
+            <date>2010-07-20</date>
+            <license uri="http://www.gnu.org/licenses/gpl-2.0.html">GPL, version 2.0</license>
+            <notes>
+                - Refactoring Action interface
+                - Refactoring ActionForm interface
+                - Refactoring Controller
+            </notes>
+        </release>
+		<release>
+			<version>
+				<release>0.1.3</release>
+				<api>0.1.1</api>
+			</version>
+			<stability>
+				<release>beta</release>
+				<api>beta</api>
+			</stability>
+			<date>2010-06-04</date>
+			<license uri="http://www.gnu.org/licenses/gpl-2.0.html">GPL, version 2.0</license>
+			<notes>
+				- Refactor TechDivision_Controller_Action_AbstractActionForm::init()
+			</notes>
+		</release>
+		<release>
+			<version>
+				<release>0.1.2</release>
+				<api>0.1.1</api>
+			</version>
+			<stability>
+				<release>beta</release>
+				<api>beta</api>
+			</stability>
+			<date>2010-06-02</date>
+			<license uri="http://www.gnu.org/licenses/gpl-2.0.html">GPL, version 2.0</license>
+			<notes>
+				- Add missing method _getClass()
+			</notes>
+		</release>
+		<release>
+			<version>
+				<release>0.1.1</release>
+				<api>0.1.0</api>
+			</version>
+			<stability>
+				<release>beta</release>
+				<api>beta</api>
+			</stability>
+			<date>2010-06-02</date>
+			<license uri="http://www.gnu.org/licenses/gpl-2.0.html">GPL, version 2.0</license>
+			<notes>
+				- Adding missing TechDivision_Controller_Interfaces_Mapping interface to package2.xml
+			</notes>
+		</release>
+		<release>
+			<version>
+				<release>0.1.0</release>
+				<api>0.1.0</api>
+			</version>
+			<stability>
+				<release>beta</release>
+				<api>beta</api>
+			</stability>
+			<date>2010-05-26</date>
+			<license uri="http://www.gnu.org/licenses/gpl-2.0.html">GPL, version 2.0</license>
+			<notes>
+				- Initial release
+			</notes>
+		</release>
+	</changelog>
+</package>

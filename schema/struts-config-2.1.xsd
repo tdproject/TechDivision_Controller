@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="struts-config">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="plugin" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="data-sources" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="message-resources" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="form-beans" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="global-forwards" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="action-mappings" minOccurs="1" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="plugin">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="set-property"/>
+      </xs:sequence>
+      <xs:attribute name="type" use="required" type="xs:string"/>
+      <xs:attribute name="include" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="set-property">
+    <xs:complexType>
+      <xs:attribute name="property" use="required" type="xs:string"/>
+      <xs:attribute name="value" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="data-sources">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="message-resources">
+    <xs:complexType>
+      <xs:attribute name="key" use="optional" type="xs:string"/>
+      <xs:attribute name="name" use="required" type="xs:string"/>
+      <xs:attribute name="path" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="form-beans">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="form-bean"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="form-bean">
+    <xs:complexType>
+      <xs:attribute name="include" use="required"/>
+      <xs:attribute name="name" use="required" type="xs:string"/>
+      <xs:attribute name="type" use="required" type="xs:string"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="global-forwards">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="forward"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="action-mappings">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="action"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="action">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="forward"/>
+      </xs:sequence>
+      <xs:attribute name="include" use="required"/>
+      <xs:attribute name="input" use="required"/>
+      <xs:attribute name="name" use="required"/>
+      <xs:attribute name="parameter" use="required"/>
+      <xs:attribute name="path" use="required"/>
+      <xs:attribute name="scope" use="required" type="scope"/>
+      <xs:attribute name="type" use="required" type="xs:string"/>
+      <xs:attribute name="unknown" use="required" type="xs:boolean"/>
+      <xs:attribute name="validate" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="forward">
+    <xs:complexType>
+      <xs:attribute name="name" use="required" type="xs:string"/>
+      <xs:attribute name="path" use="required"/>
+      <xs:attribute name="redirect" use="required" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:simpleType name="scope">
+    <xs:restriction base="xs:NMTOKEN">
+      <xs:enumeration value="session"/>
+      <xs:enumeration value="request"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

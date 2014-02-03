@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<struts-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.techdivision.com/schema/struts-config-2.1.1.xsd">
+  <plugins/>
+  <global-forwards>
+    <forward name="merge" path="merge.tpl.html" redirect="false" />
+  </global-forwards>
+  <form-beans>
+    <form-bean name="mergeForm" type="TechDivision_Controller_Merge_Form" include="TechDivision/Controller/Merge/Form.php"/>
+  </form-beans>
+  <action-mappings>
+    <action path="/testMerge" name="mergeForm" type="TechDivision_Controller_Merge_DeleteAction" scope="request" input="test_merge.tpl.html" parameter="testParameter" validate="false" include="TechDivision/Controller/Merge/DeleteAction.php" unknown="false">
+      <forward name="Success" path="/mergeOverview" redirect="false" />
+      <forward name="Failure" path="/mergeOverview" redirect="false" />
+    </action>
+  </action-mappings>
+</struts-config>

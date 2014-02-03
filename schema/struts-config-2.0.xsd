@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+  <xs:element name="struts-config">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="plugins"/>
+        <xs:element ref="data-sources"/>
+        <xs:element ref="message-resources"/>
+        <xs:element ref="form-beans"/>
+        <xs:element ref="global-forwards"/>
+        <xs:element ref="action-mappings"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="plugins">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="plugin"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="plugin">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="set-property"/>
+      </xs:sequence>
+      <xs:attribute name="include" use="required"/>
+      <xs:attribute name="name" use="required" type="xs:NCName"/>
+      <xs:attribute name="type" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="description" type="xs:string"/>
+  <xs:element name="set-property">
+    <xs:complexType>
+      <xs:attribute name="property" use="required" type="xs:NCName"/>
+      <xs:attribute name="value" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="data-sources">
+    <xs:complexType/>
+  </xs:element>
+  <xs:element name="message-resources">
+    <xs:complexType>
+      <xs:attribute name="name" use="required" type="xs:NCName"/>
+      <xs:attribute name="path" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="form-beans">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="form-bean"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="form-bean">
+    <xs:complexType>
+      <xs:attribute name="include" use="required"/>
+      <xs:attribute name="name" use="required" type="xs:NCName"/>
+      <xs:attribute name="type" use="required" type="xs:NCName"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="global-forwards">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="forward"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="action-mappings">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="action"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="action">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element maxOccurs="unbounded" ref="forward"/>
+      </xs:sequence>
+      <xs:attribute name="include" use="required"/>
+      <xs:attribute name="input" use="required"/>
+      <xs:attribute name="name" use="required"/>
+      <xs:attribute name="parameter" use="required"/>
+      <xs:attribute name="path" use="required"/>
+      <xs:attribute name="scope" use="required" type="xs:NCName"/>
+      <xs:attribute name="type" use="required" type="xs:NCName"/>
+      <xs:attribute name="unknown" use="required" type="xs:boolean"/>
+      <xs:attribute name="validate" use="required"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="forward">
+    <xs:complexType>
+      <xs:attribute name="name" use="required" type="xs:NCName"/>
+      <xs:attribute name="path" use="required"/>
+      <xs:attribute name="redirect" use="required" type="xs:boolean"/>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<struts-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.techdivision.com/schema/struts-config-2.1.1.xsd">
+    <plugins/>
+  <global-forwards>
+    <forward name="error" path="error.tpl.html" redirect="false" />
+  </global-forwards>
+  <form-beans>
+    <form-bean name="mockForm" type="TechDivision_Controller_Mock_Form" include="TechDivision/Controller/Mock/Form.php"/>
+  </form-beans>
+  <action-mappings>
+    <action path="/testDelete" name="" type="TechDivision_Controller_Mock_DeleteAction" scope="request" input="" parameter="" validate="false" include="TechDivision/Controller/Mock/DeleteAction.php" unknown="false">
+      <forward name="Success" path="/testOverview" redirect="false" />
+      <forward name="Failure" path="/testOverview" redirect="false" />
+    </action>
+    <action path="/testEdit" name="mockForm" type="TechDivision_Controller_Mock_EditAction" scope="request" input="" parameter="" validate="false" include="TechDivision/Controller/Mock/EditAction.php" unknown="false">
+      <forward name="Success" path="test_edit.tpl.html" redirect="false" />
+      <forward name="Failure" path="test_overview.tpl.html" redirect="false" />
+    </action>
+    <action path="/testOverview" name="" type="TechDivision_Controller_Mock_OverviewAction" scope="request" input="" parameter="" validate="false" include="TechDivision/Controller/Mock/OverviewAction.php" unknown="false">
+      <forward name="Success" path="test_overview.tpl.html" redirect="false" />
+      <forward name="Failure" path="test_overview.tpl.html" redirect="false" />
+    </action>
+    <action path="/testSave" name="mockForm" type="TechDivision_Controller_Mock_SaveAction" scope="request" input="test_edit.tpl.html" parameter="testParameter" validate="true" include="TechDivision/Controller/Mock/SaveAction.php" unknown="false">
+      <forward name="Success" path="/testView" redirect="false" />
+      <forward name="Failure" path="test_edit.tpl.html" redirect="false" />
+    </action>
+    <action path="/testView" name="" type="TechDivision_Controller_Mock_ViewAction" scope="request" input="" parameter="" validate="false" include="TechDivision/Controller/Mock/ViewAction.php" unknown="false">
+      <forward name="Success" path="test_view.tpl.html" redirect="false" />
+      <forward name="Failure" path="test_view.tpl.html" redirect="false" />
+    </action>
+    <action path="/testSession" name="mockForm" type="TechDivision_Controller_Mock_EditSessionAction" scope="session" input="" parameter="" validate="false" include="TechDivision/Controller/Mock/EditSessionAction.php" unknown="false">
+      <forward name="Success" path="test_edit.tpl.html" redirect="false" />
+      <forward name="Failure" path="test_overview.tpl.html" redirect="false" />
+    </action>
+  </action-mappings>
+</struts-config>
